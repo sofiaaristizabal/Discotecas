@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
+import { LoginUsuarioDto } from './dto/login-dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -62,5 +63,28 @@ export class UsuariosService {
 
     const usuario = await this.usuarioRepository.delete({id:id});
     return usuario;
+  }
+
+  async login (loginUsuarioDto: LoginUsuarioDto){
+
+    try {
+      const {email, password} = loginUsuarioDto;
+      const usuario = await this.usuarioRepository.findOneBy({email})
+      if(!usuario){
+        throw new UnauthorizedException('Invalid credentials');
+      }
+
+      const isValid = bcrypt.compareSync(password, usuario.password);
+      if(!isValid){
+        throw new UnauthorizedException('Invalid credentials')
+      }
+
+      const {fullName} = usuario;
+      //const jwt = this.jwtService.sign({email, fullName});
+      return {user: {fullName, email}};
+    } catch(err){
+      console.log(err);
+      throw new UnauthorizedException(err.detail);
+    }
   }
 }

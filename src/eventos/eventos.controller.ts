@@ -19,16 +19,16 @@ export class EventosController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.eventosService.findOne(+id);
+    return this.eventosService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEventoDto: UpdateEventoDto) {
-    return this.eventosService.update(+id, updateEventoDto);
+    return this.eventosService.update(id, updateEventoDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.eventosService.remove(+id);
+    return this.eventosService.remove(id);
   }
 }

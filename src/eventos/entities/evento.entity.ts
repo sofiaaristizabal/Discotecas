@@ -1,5 +1,7 @@
 import { Discoteca } from "src/discotecas/entities/discoteca.entity";
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
+import { Usuario } from "src/usuarios/entities/usuario.entity";
+import { Consumidor } from "src/consumidores/entities/consumidore.entity";
 
 @Entity()
 export class Evento {
@@ -22,6 +24,13 @@ export class Evento {
     @Column()
     tematica:string;
 
+    @ManyToOne(()=>Discoteca, (discoteca)=>discoteca.eventos)
     discoteca:Discoteca; 
+
+    @OneToMany(()=>Consumidor, (consumidor)=>consumidor.evento)
+    asistentes:Consumidor[];
+
+    @ManyToOne(()=>Consumidor, (consumidor)=>consumidor.historicoDeEventos)
+    consumidor:Consumidor;
     
 }

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Evento } from "src/eventos/entities/evento.entity";
 
 @Entity()
 export class Discoteca {
@@ -35,4 +36,7 @@ export class Discoteca {
 
     @Column()
     menu:string;
+
+    @OneToMany(()=>Evento, (evento)=>evento.discoteca)
+    eventos: Evento[];
 }

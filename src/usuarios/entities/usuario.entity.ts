@@ -1,5 +1,6 @@
 import { MinLength } from "class-validator";
 import { Entity, Column, TableInheritance, PrimaryGeneratedColumn, OneToMany} from "typeorm";
+import { Consumidor } from "src/consumidores/entities/consumidore.entity";
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'role' } })
@@ -25,5 +26,8 @@ export class Usuario {
 
     @Column('text')
     phoneNumber:string;
+
+    @OneToMany(()=>Consumidor, (consumidor)=>consumidor.usuario)
+    consumidores:Consumidor[]; 
 
 }

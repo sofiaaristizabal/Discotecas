@@ -1,26 +1,66 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Usuario } from './entities/usuario.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsuariosService {
-  create(createUsuarioDto: CreateUsuarioDto) {
-    return 'This action adds a new usuario';
+  
+  constructor(@InjectRepository(Usuario)
+  private readonly usuarioRepository: Repository<Usuario>,
+  )
+  {}
+
+
+  async create(createUsuarioDto: CreateUsuarioDto) {
+
+    try{
+      const usuario = this.usuarioRepository.create(createUsuarioDto);
+      usuario.password = await bcrypt.hash(usuario.password, 10);
+      await this.usuarioRepository.save(usuario);
+      const {fullName, email} = usuario;
+      return usuario;
+    } 
+    catch(err){
+      console.log(err);
+      throw new BadRequestException(err.detail);
+    }
+
   }
 
-  findAll() {
-    return `This action returns all usuarios`;
+  async findAll() {
+
+    const usuarios= await this.usuarioRepository.find({});
+    return usuarios;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} usuario`;
+  async findOne(id: string) {
+
+    const usuario = await this.usuarioRepository.findOneBy({id:id});
+    if(!usuario){
+      throw new NotFoundException(`the user with id #${id} was not found `)
+    }
+    return usuario;
   }
 
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
+  async update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
+
+    const usuario = await  this.usuarioRepository.preload({id:id,...updateUsuarioDto});
+    if(!usuario){
+      throw new NotFoundException(`the user with id #${id} was not found `)
+    }
+
+    this.usuarioRepository.save(usuario);
+
+    return usuario;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} usuario`;
+  async remove(id: string) {
+
+    const usuario = await this.usuarioRepository.delete({id:id});
+    return usuario;
   }
 }

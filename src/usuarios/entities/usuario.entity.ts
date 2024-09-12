@@ -1,20 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { MinLength } from "class-validator";
+import { Entity, Column, TableInheritance, PrimaryGeneratedColumn, OneToMany} from "typeorm";
 
 @Entity()
+@TableInheritance({ column: { type: 'varchar', name: 'role' } })
 export class Usuario {
 
     @PrimaryGeneratedColumn('uuid')
-       id:string;
-    
-    @Column('text')
+    id:string;
+
+    @Column('text', {unique:true})
+    @MinLength(4)
     email:string;
 
     @Column('text')
+    @MinLength(8)
     password:string;
 
-    @Column('text')
-    nombreCompleto:string;
+    @Column('boolean', {default:true})
+    isActive:boolean;
 
     @Column('text')
-    fechaNacimiento:string; 
+    @MinLength(1)
+    fullName:string; 
+
+    @Column('text')
+    phoneNumber:string;
+
 }

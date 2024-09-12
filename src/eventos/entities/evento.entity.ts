@@ -1,6 +1,5 @@
 import { Discoteca } from "src/discotecas/entities/discoteca.entity";
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
-import { Usuario } from "src/usuarios/entities/usuario.entity";
 import { Consumidor } from "src/consumidores/entities/consumidore.entity";
 
 @Entity()

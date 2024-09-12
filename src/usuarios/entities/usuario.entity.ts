@@ -1,6 +1,7 @@
 import { MinLength } from "class-validator";
 import { Entity, Column, TableInheritance, PrimaryGeneratedColumn, OneToMany} from "typeorm";
 import { Consumidor } from "src/consumidores/entities/consumidore.entity";
+import { Discoteca } from "src/discotecas/entities/discoteca.entity";
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'role' } })
@@ -29,5 +30,8 @@ export class Usuario {
 
     @OneToMany(()=>Consumidor, (consumidor)=>consumidor.usuario)
     consumidores:Consumidor[]; 
+
+    @OneToMany(()=>Discoteca, (discoteca)=>discoteca.usuario)
+    discotecas:Discoteca[];
 
 }

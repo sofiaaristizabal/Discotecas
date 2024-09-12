@@ -1,42 +1,39 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm";
 import { Evento } from "src/eventos/entities/evento.entity";
+import { Usuario } from "src/usuarios/entities/usuario.entity";
 
 @Entity()
-export class Discoteca {
+export class Discoteca extends Usuario{
 
     @PrimaryGeneratedColumn('uuid')
     id:string;
 
-    @Column()
-    nombre:string;
-
-    @Column()
-    correo:string;
-
-    @Column()
-    password:string;
-
-    @Column()
+    @Column('text', {
+        nullable:false
+    })
     direccion:string;
 
-    @Column()
+    @Column('text')
     descripcion:string;
 
-    @Column()
+    @Column('text')
     horarios:string;
 
-    @Column()
+    @Column('text')
     genero:string;
 
-    @Column()
+    @Column('text')
     contacto:string;
 
-    @Column()
+    @Column('text')
     redSocial:string;
 
-    @Column()
+    @Column('text')
     menu:string;
 
     @OneToMany(()=>Evento, (evento)=>evento.discoteca)
     eventos: Evento[];
+
+    @ManyToOne(()=>Usuario, (usuario)=>usuario.discotecas)
+    usuario:Usuario;
 }

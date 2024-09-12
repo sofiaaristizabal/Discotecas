@@ -19,16 +19,16 @@ export class ConsumidoresController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.consumidoresService.findOne(+id);
+    return this.consumidoresService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateConsumidoreDto: UpdateConsumidoreDto) {
-    return this.consumidoresService.update(+id, updateConsumidoreDto);
+    return this.consumidoresService.update(id, updateConsumidoreDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.consumidoresService.remove(+id);
+    return this.consumidoresService.remove(id);
   }
 }

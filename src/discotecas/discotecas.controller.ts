@@ -24,11 +24,11 @@ export class DiscotecasController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDiscotecaDto: UpdateDiscotecaDto) {
-    return this.discotecasService.update(+id, updateDiscotecaDto);
+    return this.discotecasService.update(id, updateDiscotecaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.discotecasService.remove(+id);
+    return this.discotecasService.remove(id);
   }
 }

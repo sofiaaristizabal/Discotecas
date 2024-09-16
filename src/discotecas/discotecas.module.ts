@@ -5,10 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Discoteca } from './entities/discoteca.entity';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { UsuariosModule } from 'src/usuarios/usuarios.module';
+import { UsuariosService } from 'src/usuarios/usuarios.service';
 
 @Module({
   controllers: [DiscotecasController],
-  providers: [DiscotecasService],
+  providers: [DiscotecasService, UsuariosService],
   imports:[TypeOrmModule.forFeature([Discoteca, Usuario]), UsuariosModule]
 })
 export class DiscotecasModule {}

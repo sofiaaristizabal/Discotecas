@@ -7,6 +7,7 @@ import { EventosModule } from './eventos/eventos.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConsumidoresModule } from './consumidores/consumidores.module';
+import { ReservasModule } from './reservas/reservas.module';
 
 @Module({
   imports: [UsuariosModule, DiscotecasModule, EventosModule,
@@ -20,7 +21,7 @@ import { ConsumidoresModule } from './consumidores/consumidores.module';
       database:process.env.DB_NAME,
       autoLoadEntities:true,
       synchronize:true
-    }), ConsumidoresModule
+    }), ConsumidoresModule, ReservasModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 export class UsuariosService {
   
   constructor(@InjectRepository(Usuario)
-  private readonly usuarioRepository: Repository<Usuario>,
+  private readonly usuarioRepository: Repository<Usuario>
   )
   {}
 

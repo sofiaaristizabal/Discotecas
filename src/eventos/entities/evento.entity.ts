@@ -21,11 +21,11 @@ export class Evento {
     cover:number;
 
     @Column()
-    tematica:string;
+    afiche:string;
 
     @ManyToOne(()=>Discoteca, (discoteca)=>discoteca.eventos)
     discoteca:Discoteca; 
-
+    
     @OneToMany(()=>Consumidor, (consumidor)=>consumidor.evento)
     asistentes:Consumidor[];
 

@@ -3,7 +3,7 @@ import { Evento } from "src/eventos/entities/evento.entity";
 import { Usuario } from "src/usuarios/entities/usuario.entity";
 
 @Entity()
-export class Consumidor extends Usuario{
+export class Consumidor {
 
     @PrimaryGeneratedColumn('uuid')
     id:string;

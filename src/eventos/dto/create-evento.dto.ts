@@ -17,7 +17,4 @@ export class CreateEventoDto {
   @IsNotEmpty()
   cover: number;
 
-  @IsString()
-  @IsNotEmpty()
-  tematica: string;
 }

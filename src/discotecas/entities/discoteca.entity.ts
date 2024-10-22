@@ -13,22 +13,29 @@ export class Discoteca{
     })
     direccion:string;
 
-    @Column('text')
+    @Column('text', {
+        nullable:true
+    })
     descripcion:string;
 
-    @Column('text')
+    @Column('text', {
+        nullable:true
+    })
     horarios:string;
 
-    @Column('text')
-    genero:string;
-
-    @Column('text')
+    @Column('text', {
+        nullable:true
+    })
     contacto:string;
 
-    @Column('text')
+    @Column('text', {
+        nullable:true
+    })
     redSocial:string;
 
-    @Column('text')
+    @Column('text', {
+        nullable:true
+    })
     menu:string;
 
     @OneToMany(()=>Evento, (evento)=>evento.discoteca)

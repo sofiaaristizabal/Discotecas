@@ -1,4 +1,4 @@
-import { IsString,  MinLength, MaxLength, IsNotEmpty,   IsUrl } from "class-validator";
+import { IsString,  MinLength, MaxLength, IsNotEmpty,   IsUrl, IsOptional } from "class-validator";
 import { CreateUsuarioDto } from "src/usuarios/dto/create-usuario.dto";
 
 export class CreateDiscotecaDto extends CreateUsuarioDto{
@@ -10,22 +10,24 @@ export class CreateDiscotecaDto extends CreateUsuarioDto{
 
     @IsString()
     @MaxLength(300)
+    @IsOptional()
     descripcion:string;
 
     @IsString()
+    @IsOptional()
     horarios:string;
 
     @IsString()
-    genero:string;
-
-    @IsString()
     @IsNotEmpty()
+    @IsOptional()
     contacto:string;
 
     @IsString()
     @IsUrl( {}, { message: 'Invalid URL format' })
+    @IsOptional()
     redSocial:string;
 
     @IsString()
+    @IsOptional()
     menu:string;
 }

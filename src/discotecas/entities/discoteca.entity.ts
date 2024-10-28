@@ -36,11 +36,6 @@ export class Discoteca{
     @Column('text', {
         nullable:true
     })
-    menu:string;
-
-    @Column('text', {
-        nullable:true
-    })
     profileImage: string; 
 
     @OneToMany(()=>Evento, (evento)=>evento.discoteca)

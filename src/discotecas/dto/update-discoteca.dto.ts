@@ -20,9 +20,6 @@ export class UpdateDiscotecaDto extends PartialType(CreateDiscotecaDto) {
     redSocial: string; 
 
     @IsString()
-    menu: string; 
-
-    @IsString()
     profileImage: string; 
 
 

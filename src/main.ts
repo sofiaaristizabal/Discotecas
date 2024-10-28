@@ -10,6 +10,7 @@ async function bootstrap() {
       forbidNonWhitelisted:true
     })
   )
+  app.enableCors();  // Enable CORS for all origins
   await app.listen(3000);
 }
 bootstrap();

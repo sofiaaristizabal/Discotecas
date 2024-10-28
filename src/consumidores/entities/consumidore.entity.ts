@@ -19,6 +19,9 @@ export class Consumidor {
     })
     dateOfBirth:string;
 
+    @Column('text')
+    profileImage: string; 
+
     @ManyToOne(()=>Evento, (evento)=>evento.asistentes)
     evento:Evento;
 

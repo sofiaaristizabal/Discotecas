@@ -4,7 +4,7 @@ import { CreateUsuarioDto } from "src/usuarios/dto/create-usuario.dto";
 export class CreateConsumidoreDto extends CreateUsuarioDto{
    
     @IsString()
-    @IsIn(['cedula de ciudadania', 'cedula de extranjeria', 'documento de identidad'])
+    @IsIn(['cedula de ciudadania', 'cedula de extranjeria'])
     tipoDeDocumento:string;
 
     @IsString()

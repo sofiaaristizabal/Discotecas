@@ -1,10 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateConsumidoreDto } from './dto/create-consumidore.dto';
 import { UpdateConsumidoreDto } from './dto/update-consumidore.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Consumidor } from './entities/consumidore.entity';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
+import { LoginConsumidorDto } from './dto/loginConsumidor-dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class ConsumidoresService {
@@ -54,5 +56,28 @@ export class ConsumidoresService {
     await this.usuarioService.remove(id);
     const consumidor = this.consumidorRepository.delete({id:id});
     return consumidor;
+  }
+
+  async login (loginConsumidorDto: LoginConsumidorDto){
+
+    try {
+      const {email, password} = loginConsumidorDto;
+      const consumidor = await this.consumidorRepository.findOneBy({email})
+      if(!consumidor){
+        throw new UnauthorizedException('Invalid credentials');
+      }
+
+      const isValid = bcrypt.compareSync(password, consumidor.password);
+      if(!isValid){
+        throw new UnauthorizedException('Invalid credentials')
+      }
+
+      const {fullName, id} = consumidor;
+      //const jwt = this.jwtService.sign({email, fullName});
+      return {consumidor: {fullName, email, id}};
+    } catch(err){
+      console.log(err);
+      throw new UnauthorizedException(err.detail);
+    }
   }
 }

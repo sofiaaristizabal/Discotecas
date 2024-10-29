@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from "typeorm";
+import { MinLength } from "class-validator";
 import { Evento } from "src/eventos/entities/evento.entity";
 import { Usuario } from "src/usuarios/entities/usuario.entity";
 
@@ -21,6 +22,24 @@ export class Consumidor {
 
     @Column('text')
     profileImage: string; 
+
+    @Column('text', {unique:true})
+    @MinLength(4)
+    email:string;
+
+    @Column('text')
+    @MinLength(8)
+    password:string;
+
+    @Column('boolean', {default:true})
+    isActive:boolean;
+
+    @Column('text')
+    @MinLength(1)
+    fullName:string; 
+
+    @Column('text')
+    phoneNumber:string;
 
     @ManyToOne(()=>Evento, (evento)=>evento.asistentes)
     evento:Evento;

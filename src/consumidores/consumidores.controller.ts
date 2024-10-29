@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ConsumidoresService } from './consumidores.service';
 import { CreateConsumidoreDto } from './dto/create-consumidore.dto';
 import { UpdateConsumidoreDto } from './dto/update-consumidore.dto';
+import { LoginConsumidorDto } from './dto/loginConsumidor-dto';
 
 @Controller('consumidores')
 export class ConsumidoresController {
@@ -30,5 +31,10 @@ export class ConsumidoresController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.consumidoresService.remove(id);
+  }
+
+  @Post('login')
+  login(@Body() loginConsumidorDto: LoginConsumidorDto){
+    return this.consumidoresService.login(loginConsumidorDto);
   }
 }

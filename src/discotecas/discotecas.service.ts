@@ -5,7 +5,7 @@ import { Discoteca } from './entities/discoteca.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
-import { LoginEmpresaDto } from './dto/loginEmpresa-dto';
+import { LoginEmpresaDto } from './dto/loginDiscoteca-dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()

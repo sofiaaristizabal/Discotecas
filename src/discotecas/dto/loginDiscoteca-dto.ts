@@ -1,6 +1,6 @@
 import { IsString, IsEmail, Matches, MaxLength, MinLength } from "class-validator";
 
-export class LoginEmpresaDto{
+export class LoginDiscotecaDto{
 
     @IsString()
     @IsEmail()

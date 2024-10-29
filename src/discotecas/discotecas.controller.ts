@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { DiscotecasService } from './discotecas.service';
 import { CreateDiscotecaDto } from './dto/create-discoteca.dto';
 import { UpdateDiscotecaDto } from './dto/update-discoteca.dto';
+import { LoginDiscotecaDto } from './dto/loginDiscoteca-dto';
 
 @Controller('discotecas')
 export class DiscotecasController {
@@ -30,5 +31,10 @@ export class DiscotecasController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.discotecasService.remove(id);
+  }
+
+  @Post('login')
+  login(@Body() loginDiscotecaDto: LoginDiscotecaDto){
+    return this.discotecasService.login(loginDiscotecaDto);
   }
 }

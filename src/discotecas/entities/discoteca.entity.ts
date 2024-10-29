@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm";
+import { MinLength } from "class-validator";
 import { Evento } from "src/eventos/entities/evento.entity";
 import { Usuario } from "src/usuarios/entities/usuario.entity";
 
@@ -24,7 +25,8 @@ export class Discoteca{
     horarios:string;
 
     @Column('text', {
-        nullable:true
+        nullable:true,
+        
     })
     contacto:string;
 
@@ -37,6 +39,25 @@ export class Discoteca{
         nullable:true
     })
     profileImage: string; 
+
+    @Column('text', {unique:true})
+    @MinLength(4)
+    email:string;
+
+    @Column('text')
+    @MinLength(8)
+    password:string;
+
+    @Column('boolean', {default:true})
+    isActive:boolean;
+
+    @Column('text')
+    @MinLength(1)
+    fullName:string; 
+
+    @Column('text')
+    phoneNumber:string;
+
 
     @OneToMany(()=>Evento, (evento)=>evento.discoteca)
     eventos: Evento[];

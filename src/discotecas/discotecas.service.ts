@@ -1,10 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateDiscotecaDto } from './dto/create-discoteca.dto';
 import { UpdateDiscotecaDto } from './dto/update-discoteca.dto';
 import { Discoteca } from './entities/discoteca.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
+import { LoginEmpresaDto } from './dto/loginEmpresa-dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class DiscotecasService {
@@ -49,5 +51,28 @@ export class DiscotecasService {
     await this.usuarioService.remove(id);
     const discoteca = await this.discotecasRepository.delete({id:id});
     return discoteca;
+  }
+
+  async login (loginEmpresaDto: LoginEmpresaDto){
+
+    try {
+      const {email, password} = loginEmpresaDto;
+      const discoteca = await this.discotecasRepository.findOneBy({email})
+      if(!discoteca){
+        throw new UnauthorizedException('Invalid credentials');
+      }
+
+      const isValid = bcrypt.compareSync(password, discoteca.password);
+      if(!isValid){
+        throw new UnauthorizedException('Invalid credentials')
+      }
+
+      const {fullName, id} = discoteca;
+      //const jwt = this.jwtService.sign({email, fullName});
+      return {discoetca: {fullName, email, id}};
+    } catch(err){
+      console.log(err);
+      throw new UnauthorizedException(err.detail);
+    }
   }
 }

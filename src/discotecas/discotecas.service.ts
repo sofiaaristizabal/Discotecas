@@ -5,7 +5,7 @@ import { Discoteca } from './entities/discoteca.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
-import { LoginEmpresaDto } from './dto/loginDiscoteca-dto';
+import { LoginDiscotecaDto } from './dto/loginDiscoteca-dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -53,10 +53,10 @@ export class DiscotecasService {
     return discoteca;
   }
 
-  async login (loginEmpresaDto: LoginEmpresaDto){
+  async login (loginDiscotecaDto: LoginDiscotecaDto){
 
     try {
-      const {email, password} = loginEmpresaDto;
+      const {email, password} = loginDiscotecaDto;
       const discoteca = await this.discotecasRepository.findOneBy({email})
       if(!discoteca){
         throw new UnauthorizedException('Invalid credentials');

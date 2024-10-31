@@ -20,7 +20,9 @@ export class Consumidor {
     })
     dateOfBirth:string;
 
-    @Column('text')
+    @Column('text', {
+        nullable:true
+    })
     profileImage: string; 
 
     @Column('text', {unique:true})

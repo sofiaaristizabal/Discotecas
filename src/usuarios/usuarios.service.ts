@@ -73,7 +73,9 @@ export class UsuariosService {
       if(!usuario){
         throw new UnauthorizedException('Invalid credentials');
       }
-
+      
+      console.log(password)
+      console.log(usuario.password)
       const isValid = bcrypt.compareSync(password, usuario.password);
       if(!isValid){
         throw new UnauthorizedException('Invalid credentials')

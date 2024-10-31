@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateConsumidoreDto } from './dto/create-consumidore.dto';
 import { UpdateConsumidoreDto } from './dto/update-consumidore.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,10 +17,18 @@ export class ConsumidoresService {
   ){}
 
   async create(createConsumidorDto: CreateConsumidoreDto) {
-    const usuario = await this.usuarioService.create(createConsumidorDto); 
-    const consumidor = this.consumidorRepository.create({ ...createConsumidorDto, usuario});  
-    await this.consumidorRepository.save(consumidor);
-    return consumidor;
+
+    try{
+      const usuario = await this.usuarioService.create(createConsumidorDto); 
+      const consumidor = this.consumidorRepository.create({ ...createConsumidorDto, usuario});  
+      consumidor.password = await bcrypt.hash(consumidor.password, 10);
+      await this.consumidorRepository.save(consumidor);
+      return consumidor;
+    } catch(err){
+      console.log(err);
+      throw new BadRequestException(err.detail);
+    }
+    
   }
 
   async findAll() {
@@ -66,10 +74,13 @@ export class ConsumidoresService {
       if(!consumidor){
         throw new UnauthorizedException('Invalid credentials');
       }
-
+      
+      console.log(password)
+      console.log(consumidor.password)
       const isValid = bcrypt.compareSync(password, consumidor.password);
+      console.log(isValid)
       if(!isValid){
-        throw new UnauthorizedException('Invalid credentials')
+        throw new UnauthorizedException('wrong password')
       }
 
       const {fullName, id} = consumidor;

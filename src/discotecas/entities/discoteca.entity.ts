@@ -40,22 +40,22 @@ export class Discoteca{
     })
     profileImage: string; 
 
-    @Column('text', {unique:true})
+    @Column('text', {unique:true, nullable:true})
     @MinLength(4)
-    email:string;
+    email:string;   
 
-    @Column('text')
+    @Column('text',{nullable:true})
     @MinLength(8)
     password:string;
 
     @Column('boolean', {default:true})
     isActive:boolean;
 
-    @Column('text')
+    @Column('text',{nullable:true})
     @MinLength(1)
     fullName:string; 
 
-    @Column('text')
+    @Column('text',{nullable:true})
     phoneNumber:string;
 
 

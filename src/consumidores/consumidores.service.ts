@@ -7,13 +7,14 @@ import { Consumidor } from './entities/consumidore.entity';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 import { LoginConsumidorDto } from './dto/loginConsumidor-dto';
 import * as bcrypt from 'bcrypt';
-
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class ConsumidoresService {
 
   constructor( @InjectRepository(Consumidor)
     private readonly consumidorRepository: Repository<Consumidor>,
-    private readonly usuarioService: UsuariosService
+    private readonly usuarioService: UsuariosService,
+    private readonly jwtService: JwtService
   ){}
 
   async create(createConsumidorDto: CreateConsumidoreDto) {
@@ -84,7 +85,7 @@ export class ConsumidoresService {
       }
 
       const {fullName, id} = consumidor;
-      //const jwt = this.jwtService.sign({email, fullName});
+      const jwt = this.jwtService.sign({email, fullName});
       return {consumidor: {fullName, email, id}};
     } catch(err){
       console.log(err);

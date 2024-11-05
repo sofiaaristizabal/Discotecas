@@ -6,12 +6,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
 import { LoginUsuarioDto } from './dto/login-dto';
 import * as bcrypt from 'bcrypt';
-
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class UsuariosService {
   
   constructor(@InjectRepository(Usuario)
-  private readonly usuarioRepository: Repository<Usuario>
+  private readonly usuarioRepository: Repository<Usuario>,
+  private readonly jwtService: JwtService
   )
   {}
 
@@ -82,7 +83,7 @@ export class UsuariosService {
       }
 
       const {fullName} = usuario;
-      //const jwt = this.jwtService.sign({email, fullName});
+      const jwt = this.jwtService.sign({email, fullName});
       return {user: {fullName, email}};
     } catch(err){
       console.log(err);

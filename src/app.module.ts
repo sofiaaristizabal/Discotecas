@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConsumidoresModule } from './consumidores/consumidores.module';
 import { ReservasModule } from './reservas/reservas.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [UsuariosModule, DiscotecasModule, EventosModule,
@@ -21,7 +22,11 @@ import { ReservasModule } from './reservas/reservas.module';
       database:process.env.DB_NAME,
       autoLoadEntities:true,
       synchronize:true
-    }), ConsumidoresModule, ReservasModule
+    }), ConsumidoresModule, ReservasModule,
+    JwtModule.register({
+      secret: '123',
+      signOptions: { expiresIn: '1d' },
+    })
   ],
   controllers: [AppController],
   providers: [AppService],
